@@ -1,0 +1,27 @@
+# Bytecode / cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual env
+venv/
+.venv/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Django
+*.log
+db.sqlite3
+/media/*
+!media/.gitkeep
+/staticfiles/*
+!static/.gitkeep
+.env
+
+# Migrations cache often useful to keep, so don't ignore them by default
+# users/migrations/ is OK to commit (except __pycache__)
+**/migrations/__pycache__/

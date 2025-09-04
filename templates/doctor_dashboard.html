@@ -1,0 +1,19 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Doctor Dashboard</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <div class="container">
+    <h2 style="text-align: center;">Doctor Dashboard</h2>
+    <p>Welcome Dr. {{ user.first_name }} {{ user.last_name }}</p>
+    {% if user.profile_pic %}
+      <img src="{{ user.profile_pic.url }}" width="100" style="border-radius:50%">
+    {% endif %}
+    <p>{{ user.address_line1 }}, {{ user.city }}, {{ user.state }} - {{ user.pincode }}</p>
+    <a href="{% url 'logout' %}" >Logout</a>
+  </div>
+</body>
+</html>
