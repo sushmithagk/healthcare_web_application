@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Blog</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+    <h2>Blog</h2>
+
+    {% for cp in categories_with_posts %}
+      <h3>{{ cp.category.name }}</h3>
+
+      {% if cp.posts %}
+        <div class="post-list">
+          {% for post in cp.posts %}
+            <div class="post-item">
+              <h4><a href="{% url 'blog_detail' post.pk %}">{{ post.title }}</a></h4>
+
+              {% if post.image %}
+                <img src="{{ post.image.url }}" alt="{{ post.title }}" width="120">
+              {% endif %}
+
+              <p>{{ post.summary|truncatewords:15 }}</p>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p>No published posts in this category.</p>
+      {% endif %}
+
+      <hr>
+    {% endfor %}
+
+  </div>
+
+</body>
+</html>
+
+
+

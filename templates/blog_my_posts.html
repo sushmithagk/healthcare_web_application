@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Doctor Dashboard</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+  <title>My Posts</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <style>
     nav {
       background: #2c3e50;
@@ -33,7 +33,7 @@
   </style>
 </head>
 <body>
-   <nav>
+      <nav>
     <ul>
       <li><a href="{% url 'doctor_dashboard' %}">Dashboard</a></li>
       <li><a href="{% url 'blog_list' %}">Blogs</a></li>
@@ -43,13 +43,21 @@
     </ul>
   </nav>
   <div class="container">
-    <h2 style="text-align: center;">Doctor Dashboard</h2>
-    <p>Welcome Dr. {{ user.first_name }} {{ user.last_name }}</p>
-    {% if user.profile_pic %}
-      <img src="{{ user.profile_pic.url }}" width="100" style="border-radius:50%">
+    <h2>My Posts</h2>
+    {% if posts %}
+      <ul>
+      {% for p in posts %}
+        <li>
+          <a href="{% url 'blog_detail' p.pk %}">{{ p.title }}</a>
+          {% if p.is_draft %}<strong>(Draft)</strong>{% endif %}
+          <br>
+          <small>{{ p.created_at }}</small>
+        </li>
+      {% endfor %}
+      </ul>
+    {% else %}
+      <p>No posts yet.</p>
     {% endif %}
-    <p>{{ user.address_line1 }}, {{ user.city }}, {{ user.state }} - {{ user.pincode }}</p>
-    <a href="{% url 'logout' %}" >Logout</a>
   </div>
 </body>
 </html>

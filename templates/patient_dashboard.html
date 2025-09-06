@@ -1,4 +1,4 @@
-{% load static %}
+<!-- {% load static %}
 
 <!DOCTYPE html>
 <html>
@@ -15,6 +15,64 @@
     {% endif %}
     <p>{{ user.address_line1 }}, {{ user.city }}, {{ user.state }} - {{ user.pincode }}</p>
     <a href="{% url 'logout' %}" >Logout</a>
+  </div>
+</body> -->
+</html>
+
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Patient Dashboard</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+  
+  <style>
+    nav {
+      background: #2c3e50;
+      padding: 10px;
+    }
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 15px;
+    }
+    nav ul li {
+      display: inline;
+    }
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav ul li a:hover {
+      text-decoration: underline;
+    }
+    .container {
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <ul>
+      <li><a href="{% url 'patient_dashboard' %}">Dashboard</a></li>
+      <li><a href="{% url 'blog_list' %}">Blogs</a></li>
+      <li><a href="{% url 'logout' %}">Logout</a></li>
+    </ul>
+  </nav>
+
+  <!-- Dashboard Content -->
+  <div class="container">
+    <h2 style="text-align: center;">Patient Dashboard</h2>
+    <p>Welcome {{ user.first_name }} {{ user.last_name }}</p>
+    {% if user.profile_pic %}
+      <img src="{{ user.profile_pic.url }}" width="100" style="border-radius:50%">
+    {% endif %}
+    <p>{{ user.address_line1 }}, {{ user.city }}, {{ user.state }} - {{ user.pincode }}</p>
   </div>
 </body>
 </html>

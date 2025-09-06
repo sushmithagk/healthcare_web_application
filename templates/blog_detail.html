@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{ post.title }}</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <div class="container">
+    <h2>{{ post.title }}</h2>
+    <p><small>By {{ post.author.get_full_name }} • {{ post.created_at }}</small></p>
+    {% if post.image %}
+      <img src="{{ post.image.url }}" alt="{{ post.title }}" width="300">
+    {% endif %}
+    <h4>Summary</h4>
+    <p>{{ post.summary }}</p>
+    <h4>Content</h4>
+    <div>{{ post.content|linebreaks }}</div>
+    <p><a href="{% url 'blog_list' %}">Back to posts</a></p>
+  </div>
+</body>
+</html>
+
+

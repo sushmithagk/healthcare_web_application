@@ -17,16 +17,6 @@ def signup_view(request):
         form = SignupForm()
     return render(request, "signup.html", {"form": form})
 
-# def login_view(request):
-#     if request.method == "POST":
-#         username = request.POST["username"]
-#         password = request.POST["password"]
-#         user = authenticate(request, username=username, password=password)
-#         if user:
-#             login(request, user)
-#             return redirect("dashboard")
-#         return render(request, "login.html", {"error": "Invalid credentials"})
-#     return render(request, "login.html")
 
 
 def logout_view(request):
@@ -43,14 +33,42 @@ def doctor_dashboard(request):
     return render(request, "doctor_dashboard.html", {"user": request.user})
 
 
+# def login_view(request):
+#     if request.method == "POST":
+#         username = request.POST["username"]
+#         password = request.POST["password"]
+#         user = authenticate(request, username=username, password=password)
+#         if user:
+#             login(request, user)
+#             # Redirect based on user type
+#             if user.user_type == "patient":
+#                 print("Redirecting to Patient Dashboard")
+#                 return redirect("patient_dashboard")
+#             elif user.user_type == "doctor":
+#                 print("Redirecting to Doctor Dashboard")
+#                 return redirect("doctor_dashboard")
+#             else:
+#                 # No generic dashboard → redirect to login or home instead
+#                 return redirect("login")  
+#         return render(request, "login.html", {"error": "Invalid credentials"})
+#     return render(request, "login.html")
+
+
 def login_view(request):
     if request.method == "POST":
-        username = request.POST["username"]
-        password = request.POST["password"]
+        username = request.POST.get("username")
+        password = request.POST.get("password")
         user = authenticate(request, username=username, password=password)
+
         if user:
             login(request, user)
-            # Redirect based on user type
+
+            # 🔹 Check for ?next= in URL or hidden input
+            next_url = request.GET.get("next") or request.POST.get("next")
+            if next_url:
+                return redirect(next_url)
+
+            # 🔹 Fallback: redirect based on user type
             if user.user_type == "patient":
                 print("Redirecting to Patient Dashboard")
                 return redirect("patient_dashboard")
@@ -58,8 +76,8 @@ def login_view(request):
                 print("Redirecting to Doctor Dashboard")
                 return redirect("doctor_dashboard")
             else:
-                # No generic dashboard → redirect to login or home instead
-                return redirect("login")  
-        return render(request, "login.html", {"error": "Invalid credentials"})
-    return render(request, "login.html")
+                return redirect("login")  # fallback
 
+        return render(request, "login.html", {"error": "Invalid credentials"})
+
+    return render(request, "login.html")
